@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+@theme {
+  /* Palette — lab-record dark theme */
+  --color-bg: #0F1419;
+  --color-surface: #171D26;
+  --color-surface-raised: #1D2430;
+  --color-border: #232B36;
+  --color-border-strong: #2E3846;
+  --color-text: #E6E8EB;
+  --color-text-muted: #8B95A3;
+  --color-text-faint: #5B6472;
+
+  --color-amber: #F0A868;
+  --color-amber-dim: #7A5A34;
+  --color-teal: #5FB3A3;
+  --color-teal-dim: #2F5C53;
+  --color-terracotta: #E2725B;
+  --color-terracotta-dim: #6E392E;
+
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+  }
+
+  ::selection {
+    background-color: var(--color-amber-dim);
+    color: var(--color-text);
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border-strong) transparent;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-amber);
+    outline-offset: 2px;
+  }
+}
+
+.theme-light {
+  --color-bg: #F7F5F0;
+  --color-surface: #FFFFFF;
+  --color-surface-raised: #F0EDE6;
+  --color-border: #E3DFD5;
+  --color-border-strong: #CFC9BA;
+  --color-text: #1C1F24;
+  --color-text-muted: #5B6472;
+  --color-text-faint: #8B95A3;
+  --color-amber-dim: #F3DDBB;
+  --color-teal-dim: #C7E8E1;
+  --color-terracotta-dim: #F3D2CA;
+}
+
+@layer utilities {
+  .ledger-rule {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .font-mono-tight {
+    font-family: var(--font-mono);
+    letter-spacing: -0.01em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

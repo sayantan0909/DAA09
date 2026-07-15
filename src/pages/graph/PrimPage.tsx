@@ -44,7 +44,6 @@ export default function PrimPage() {
   const dryRunLog = useMemo(() => steps.map((s) => s.message), [steps])
 
   const step = player.currentStep
-  const mstCost = step.mstCost ?? 0
   const mstEdges = step.mstEdges ?? []
 
   return (

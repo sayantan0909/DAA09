@@ -1,4 +1,5 @@
-import { useMemo, useState, useEffect } from 'react'
+import { useMemo, useState } from 'react'
+import type { ReactNode } from 'react'
 import { NavLink } from 'react-router-dom'
 import { categories } from '@/data/categories'
 import { algorithms } from '@/data/algorithms'
@@ -12,7 +13,7 @@ interface SidebarProps {
 }
 
 // Category icons (SVG paths) for the collapsed icon rail
-const CATEGORY_ICONS: Record<AlgorithmCategoryId, JSX.Element> = {
+const CATEGORY_ICONS: Record<AlgorithmCategoryId, ReactNode> = {
   searching: (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="11" cy="11" r="8" />

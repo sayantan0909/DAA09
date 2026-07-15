@@ -6,6 +6,7 @@ import { ExptBadge } from '@/components/ui/ExptBadge'
 import { ComplexityTable } from '@/components/ui/ComplexityTable'
 import { VivaQuestions } from '@/components/ui/VivaQuestions'
 import { CodePanel } from '@/components/visualizer/CodePanel'
+import { CodeComparePanel } from '@/components/visualizer/CodeComparePanel'
 
 type TabId =
   | 'theory'
@@ -35,8 +36,12 @@ interface AlgorithmPageShellProps {
   visualizer: ReactNode
   /** transcript of every step's narration, rendered on the Dry Run tab */
   dryRunLog: string[]
-  /** current highlighted code line, kept in sync with the visualizer's step */
+  /** current highlighted C code line, kept in sync with the visualizer's step */
   codeHighlightLine?: number
+  /** current highlighted pseudocode line, kept in sync with the visualizer's step */
+  pseudoHighlightLine?: number
+  /** optional human-readable annotation for the current step (shown in compare caption) */
+  stepCaption?: string
 }
 
 export function AlgorithmPageShell({
@@ -45,8 +50,11 @@ export function AlgorithmPageShell({
   visualizer,
   dryRunLog,
   codeHighlightLine,
+  pseudoHighlightLine,
+  stepCaption,
 }: AlgorithmPageShellProps) {
   const [tab, setTab] = useState<TabId>('visualization')
+  const [compareOpen, setCompareOpen] = useState(false)
   const category = getCategory(algorithm.category)
 
   return (
@@ -99,7 +107,62 @@ export function AlgorithmPageShell({
         </div>
       )}
 
-      {tab === 'visualization' && <div>{visualizer}</div>}
+      {tab === 'visualization' && (
+        <div className="space-y-4">
+          {/* Visualizer + optional compare panel toggle */}
+          <div>{visualizer}</div>
+
+          {/* Compare panel toggle button */}
+          <div className="flex items-center gap-3 border-t border-border pt-4">
+            <button
+              onClick={() => setCompareOpen((v) => !v)}
+              className={`inline-flex items-center gap-2 rounded-md border px-3 py-2 font-mono-tight text-xs uppercase tracking-wider transition-all ${
+                compareOpen
+                  ? 'border-amber bg-amber/10 text-amber'
+                  : 'border-border text-text-faint hover:border-border-strong hover:text-text-muted'
+              }`}
+              aria-expanded={compareOpen}
+            >
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+              >
+                <rect x="2" y="3" width="9" height="18" rx="1" />
+                <rect x="13" y="3" width="9" height="18" rx="1" />
+              </svg>
+              {compareOpen ? 'Hide Code Compare' : 'Show Code Compare'}
+            </button>
+            {compareOpen && (
+              <span className="font-mono-tight text-xs text-text-faint">
+                Pseudocode ↔ C Code synchronized with animation step
+              </span>
+            )}
+          </div>
+
+          {/* Split compare panel — inline below visualizer */}
+          {compareOpen && (
+            <div
+              className="rounded-lg border border-border bg-surface p-4"
+              style={{
+                animation: 'slideDown 200ms ease',
+              }}
+            >
+              <CodeComparePanel
+                pseudocode={content.pseudocode}
+                code={content.code}
+                pseudoHighlightLine={pseudoHighlightLine}
+                codeHighlightLine={codeHighlightLine}
+                caption={stepCaption}
+              />
+            </div>
+          )}
+        </div>
+      )}
 
       {tab === 'pseudocode' && (
         <pre className="overflow-x-auto rounded-lg border border-border bg-surface p-5 font-mono-tight text-sm leading-relaxed text-text-muted">
@@ -150,6 +213,13 @@ export function AlgorithmPageShell({
           <VivaQuestions questions={content.viva} />
         </div>
       )}
+
+      <style>{`
+        @keyframes slideDown {
+          from { opacity: 0; transform: translateY(-8px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </div>
   )
 }

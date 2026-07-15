@@ -39,6 +39,8 @@ export default function ModifiedLinearSearchPage() {
       content={modifiedLinearSearchContent}
       dryRunLog={dryRunLog}
       codeHighlightLine={modifiedLinearSearchContent.codeLines[player.currentStep.phase]}
+      pseudoHighlightLine={modifiedLinearSearchContent.pseudoLines?.[player.currentStep.phase]}
+      stepCaption={player.currentStep.message}
       visualizer={
         <div className="space-y-4">
           <ArrayInputForm

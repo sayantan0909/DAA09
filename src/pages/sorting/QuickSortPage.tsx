@@ -53,6 +53,8 @@ export default function QuickSortPage() {
       content={quickSortContent}
       dryRunLog={dryRunLog}
       codeHighlightLine={quickSortContent.codeLines[player.currentStep.phase]}
+      pseudoHighlightLine={quickSortContent.pseudoLines?.[player.currentStep.phase]}
+      stepCaption={player.currentStep.message}
       visualizer={
         <div className="space-y-4">
           <SortArrayInput onApply={handleCustomArray} />

@@ -43,6 +43,8 @@ export default function MCMPage() {
       content={mcmContent}
       dryRunLog={dryRunLog}
       codeHighlightLine={mcmContent.codeLines[player.currentStep.phase]}
+      pseudoHighlightLine={mcmContent.pseudoLines?.[player.currentStep.phase]}
+      stepCaption={player.currentStep.message}
       visualizer={
         <div className="space-y-4">
           <MCMInputForm onApply={handleCustomDims} />

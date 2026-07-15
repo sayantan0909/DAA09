@@ -43,6 +43,8 @@ export default function SelectionSortPage() {
       content={selectionSortContent}
       dryRunLog={dryRunLog}
       codeHighlightLine={selectionSortContent.codeLines[player.currentStep.phase]}
+      pseudoHighlightLine={selectionSortContent.pseudoLines?.[player.currentStep.phase]}
+      stepCaption={player.currentStep.message}
       visualizer={
         <div className="space-y-4">
           <SortArrayInput onApply={handleCustomArray} />

@@ -8,6 +8,7 @@ import { GraphCanvas, GraphLegend } from '@/components/visualizer/GraphCanvas'
 import { PlaybackControls } from '@/components/visualizer/PlaybackControls'
 import { ExampleSelector } from '@/components/visualizer/ExampleSelector'
 import { GraphInput } from '@/components/visualizer/GraphInput'
+import { PrimCandidatePanel } from '@/components/visualizer/PrimCandidatePanel'
 import type { StaticGraph } from '@/types/graphStep'
 
 const algorithm = getAlgorithm('prim')!
@@ -52,6 +53,8 @@ export default function PrimPage() {
       content={primContent}
       dryRunLog={dryRunLog}
       codeHighlightLine={primContent.codeLines[step.phase]}
+      pseudoHighlightLine={primContent.pseudoLines?.[step.phase]}
+      stepCaption={step.message}
       visualizer={
         <div className="space-y-4">
           <GraphInput onGraphChange={handleCustomGraph} requireWeights warnDisconnected allowSource />
@@ -72,29 +75,25 @@ export default function PrimPage() {
             showWeights
           />
 
+          <PrimCandidatePanel step={step} />
+
           <div className="rounded-lg border border-border bg-surface p-4">
             <div className="mb-2 font-mono-tight text-xs uppercase tracking-wider text-text-faint">
-              Minimum Spanning Tree (MST)
+              Minimum Spanning Tree (MST) Edges
             </div>
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-6">
-              <div className="flex items-baseline gap-2">
-                <span className="font-mono-tight text-3xl font-bold text-teal">{mstCost}</span>
-                <span className="text-xs text-text-muted">Total Cost</span>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {mstEdges.length === 0 ? (
-                  <span className="font-mono-tight text-sm text-text-faint italic">No edges added yet</span>
-                ) : (
-                  mstEdges.map((e, i) => (
-                    <span
-                      key={i}
-                      className="rounded border border-teal/30 bg-teal/10 px-2 py-1 font-mono-tight text-sm text-teal"
-                    >
-                      {e.from}–{e.to} ({e.weight})
-                    </span>
-                  ))
-                )}
-              </div>
+            <div className="flex flex-wrap gap-2">
+              {mstEdges.length === 0 ? (
+                <span className="font-mono-tight text-sm text-text-faint italic">No edges added yet</span>
+              ) : (
+                mstEdges.map((e, i) => (
+                  <span
+                    key={i}
+                    className="rounded border border-teal/30 bg-teal/10 px-2 py-1 font-mono-tight text-sm text-teal"
+                  >
+                    {e.from}–{e.to} ({e.weight})
+                  </span>
+                ))
+              )}
             </div>
           </div>
 

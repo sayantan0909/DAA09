@@ -99,6 +99,13 @@ The "visited" array prevents revisiting and infinite loops in graphs with cycles
     visit: 21,
     done: 29,
   },
+  pseudoLines: {
+    start: 1,
+    enqueue: 13,
+    dequeue: 7,
+    visit: 8,
+    done: 6,
+  },
 
   complexity: {
     best: 'O(V + E)',

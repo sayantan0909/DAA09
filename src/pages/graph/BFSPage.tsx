@@ -9,6 +9,7 @@ import { PlaybackControls } from '@/components/visualizer/PlaybackControls'
 import { TokenPanel, TraversalOrder } from '@/components/visualizer/TokenPanel'
 import { ExampleSelector } from '@/components/visualizer/ExampleSelector'
 import { GraphInput } from '@/components/visualizer/GraphInput'
+import { BFSQueuePanel } from '@/components/visualizer/BFSQueuePanel'
 import type { StaticGraph } from '@/types/graphStep'
 
 const algorithm = getAlgorithm('bfs')!
@@ -50,6 +51,8 @@ export default function BFSPage() {
       content={bfsContent}
       dryRunLog={dryRunLog}
       codeHighlightLine={bfsContent.codeLines[player.currentStep.phase]}
+      pseudoHighlightLine={bfsContent.pseudoLines?.[player.currentStep.phase]}
+      stepCaption={player.currentStep.message}
       visualizer={
         <div className="space-y-4">
           <GraphInput onGraphChange={handleCustomGraph} allowSource />
@@ -69,14 +72,7 @@ export default function BFSPage() {
             edgeStates={player.currentStep.edgeStates}
           />
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <TokenPanel
-              title="Queue (Front → Rear)"
-              tokens={player.currentStep.queue ?? []}
-              accentFirst
-            />
-            <TraversalOrder order={player.currentStep.visitOrder ?? []} />
-          </div>
+          <BFSQueuePanel step={player.currentStep} />
 
           <PlaybackControls
             isPlaying={player.isPlaying}

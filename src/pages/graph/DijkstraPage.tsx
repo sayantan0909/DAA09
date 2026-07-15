@@ -52,6 +52,8 @@ export default function DijkstraPage() {
       content={dijkstraContent}
       dryRunLog={dryRunLog}
       codeHighlightLine={dijkstraContent.codeLines[step.phase]}
+      pseudoHighlightLine={dijkstraContent.pseudoLines?.[step.phase]}
+      stepCaption={step.message}
       visualizer={
         <div className="space-y-4">
           <GraphInput
@@ -82,6 +84,7 @@ export default function DijkstraPage() {
             rows={step.distTable ?? []}
             currentVertex={step.currentVertex}
             relaxingVertex={step.relaxingVertex}
+            relaxationCheck={step.relaxationCheck}
           />
 
           <PlaybackControls

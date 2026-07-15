@@ -122,6 +122,13 @@ Why Greedy works: At each step, the cheapest crossing edge cannot be part of any
     relax: 42,
     done: 51,
   },
+  pseudoLines: {
+    start: 1,
+    'pick-edge': 10,
+    'accept-edge': 11,
+    relax: 14,
+    done: 16,
+  },
 
   complexity: {
     best: 'O(E log V)',

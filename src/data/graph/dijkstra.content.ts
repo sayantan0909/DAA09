@@ -127,6 +127,12 @@ Important: Dijkstra FAILS on graphs with negative edge weights. Use Bellman-Ford
     relax: 43,
     done: 54,
   },
+  pseudoLines: {
+    start: 1,
+    finalize: 9,
+    relax: 12,
+    done: 1,
+  },
 
   complexity: {
     best: 'O(V²)',

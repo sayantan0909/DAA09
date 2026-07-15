@@ -97,6 +97,16 @@ int main() {
     'merge-done': 35,
     'done': 50
   },
+  pseudoLines: {
+    'start':            1,  // procedure mergeSort
+    'divide':           2,  // if l < r
+    'merge-compare':   19,  // while i < length(leftArray) and j ...
+    'merge-copy-left': 21,  // A[k] = leftArray[i]
+    'merge-copy-right':24,  // A[k] = rightArray[j]
+    'merge-remainder': 30,  // while i < length(leftArray)
+    'merge-done':      14,  // procedure merge
+    'done':             6,  // end procedure
+  },
   complexity: {
     best: 'O(N log N)',
     average: 'O(N log N)',

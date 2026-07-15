@@ -113,9 +113,18 @@ export function generatePrimSteps(graph: StaticGraph, source: number): GraphStep
   }
   pq.sort((a, b) => a.weight - b.weight)
 
+  const getCandidateEdges = () => {
+    return pq.map((e, idx) => ({
+      from: graph.nodes[e.from].label,
+      to: graph.nodes[e.to].label,
+      weight: e.weight,
+      isMin: idx === 0
+    }))
+  }
+
   steps.push({
     nodeStates: [...ns], edgeStates: getEs(),
-    mstCost: 0, mstEdges: [],
+    mstCost: 0, mstEdges: [], candidateEdges: getCandidateEdges(),
     message: `Prim's from vertex ${graph.nodes[source].label}. Added to MST. Priority queue initialized with ${graph.nodes[source].label}'s edges.`,
     phase: 'start',
   })
@@ -129,7 +138,7 @@ export function generatePrimSteps(graph: StaticGraph, source: number): GraphStep
     // Mark this edge as being considered
     steps.push({
       nodeStates: [...ns], edgeStates: getEs(best.ei, 'active'),
-      mstCost, mstEdges: [...mstEdges],
+      mstCost, mstEdges: [...mstEdges], candidateEdges: getCandidateEdges(),
       message: `Priority Queue top: edge ${fromL}–${toL} (w=${best.weight}). Is vertex ${toL} already in MST?`,
       phase: 'pick-edge',
     })
@@ -139,7 +148,7 @@ export function generatePrimSteps(graph: StaticGraph, source: number): GraphStep
       if (es[best.ei] === 'active') es[best.ei] = 'idle'
       steps.push({
         nodeStates: [...ns], edgeStates: getEs(),
-        mstCost, mstEdges: [...mstEdges],
+        mstCost, mstEdges: [...mstEdges], candidateEdges: getCandidateEdges(),
         message: `Vertex ${toL} already in MST — skip this edge (stale PQ entry).`,
         phase: 'pick-edge',
       })
@@ -158,7 +167,7 @@ export function generatePrimSteps(graph: StaticGraph, source: number): GraphStep
 
     steps.push({
       nodeStates: [...ns], edgeStates: getEs(),
-      mstCost, mstEdges: [...mstEdges],
+      mstCost, mstEdges: [...mstEdges], candidateEdges: getCandidateEdges(),
       message: `Edge ${fromL}–${toL} (w=${best.weight}) accepted. MST cost = ${mstCost}. Vertices in MST: {${mstNodesLabel}}`,
       phase: 'accept-edge',
     })
@@ -175,7 +184,7 @@ export function generatePrimSteps(graph: StaticGraph, source: number): GraphStep
 
     steps.push({
       nodeStates: [...ns], edgeStates: getEs(),
-      mstCost, mstEdges: [...mstEdges],
+      mstCost, mstEdges: [...mstEdges], candidateEdges: getCandidateEdges(),
       message: `Added new candidates to PQ. PQ: [${pq.map((e) => `${graph.nodes[e.from].label}-${graph.nodes[e.to].label}(${e.weight})`).join(', ')}]`,
       phase: 'enqueue',
     })
@@ -183,7 +192,7 @@ export function generatePrimSteps(graph: StaticGraph, source: number): GraphStep
 
   steps.push({
     nodeStates: [...ns], edgeStates: getEs(),
-    mstCost, mstEdges: [...mstEdges],
+    mstCost, mstEdges: [...mstEdges], candidateEdges: [],
     message: `Prim's complete! MST cost = ${mstCost}. MST edges: ${mstEdges.map((e) => `${e.from}-${e.to}(${e.weight})`).join(', ')}`,
     phase: 'done',
   })

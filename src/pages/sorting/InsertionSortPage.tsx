@@ -43,6 +43,8 @@ export default function InsertionSortPage() {
       content={insertionSortContent}
       dryRunLog={dryRunLog}
       codeHighlightLine={insertionSortContent.codeLines[player.currentStep.phase]}
+      pseudoHighlightLine={insertionSortContent.pseudoLines?.[player.currentStep.phase]}
+      stepCaption={player.currentStep.message}
       visualizer={
         <div className="space-y-4">
           <SortArrayInput onApply={handleCustomArray} />

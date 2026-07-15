@@ -86,11 +86,12 @@ export function generateDFSSteps(graph: StaticGraph, source: number): GraphStep[
   const visitOrderIds: number[] = []
 
   const getS = () => stackIds.map(id => graph.nodes[id].label)
+  const getCallStack = () => stackIds.map(id => ({ fn: 'DFS', args: `(${graph.nodes[id].label})` }))
   const getOrder = () => visitOrderIds.map(id => graph.nodes[id].label)
 
   steps.push({
     nodeStates: [...ns], edgeStates: [...es],
-    stack: getS(), visitOrder: getOrder(), isBacktrack: false,
+    stack: getS(), callStack: getCallStack(), visitOrder: getOrder(), isBacktrack: false,
     message: `DFS from vertex ${graph.nodes[source].label}. Push source to stack. Stack: [${getS().join(', ')}]`,
     phase: 'start',
   })
@@ -102,7 +103,7 @@ export function generateDFSSteps(graph: StaticGraph, source: number): GraphStep[
     if (ns[curr] === 'visited') {
       steps.push({
         nodeStates: [...ns], edgeStates: [...es],
-        stack: getS(), visitOrder: getOrder(), isBacktrack: true,
+        stack: getS(), callStack: getCallStack(), visitOrder: getOrder(), isBacktrack: true,
         message: `Pop ${currLabel}. Already visited, backtrack.`,
         phase: 'backtrack',
       })
@@ -114,7 +115,7 @@ export function generateDFSSteps(graph: StaticGraph, source: number): GraphStep[
 
     steps.push({
       nodeStates: [...ns], edgeStates: [...es],
-      stack: getS(), visitOrder: getOrder(), isBacktrack: false,
+      stack: getS(), callStack: getCallStack(), visitOrder: getOrder(), isBacktrack: false,
       message: `Pop ${currLabel}. Mark as visited. Visit order: [${getOrder().join(' → ')}]`,
       phase: 'pop',
     })
@@ -132,7 +133,7 @@ export function generateDFSSteps(graph: StaticGraph, source: number): GraphStep[
           es[ei] = 'active'
           steps.push({
             nodeStates: [...ns], edgeStates: [...es],
-            stack: getS(), visitOrder: getOrder(), isBacktrack: false,
+            stack: getS(), callStack: getCallStack(), visitOrder: getOrder(), isBacktrack: false,
             message: `Neighbor ${nbLabel} is unvisited. Push to stack. Stack: [${getS().join(', ')}]`,
             phase: 'push',
           })
@@ -144,7 +145,7 @@ export function generateDFSSteps(graph: StaticGraph, source: number): GraphStep[
           es[ei] = 'rejected'
           steps.push({
             nodeStates: [...ns], edgeStates: [...es],
-            stack: getS(), visitOrder: getOrder(), isBacktrack: false,
+            stack: getS(), callStack: getCallStack(), visitOrder: getOrder(), isBacktrack: false,
             message: `Neighbor ${nbLabel} already visited. Cross/Back edge ignored.`,
             phase: 'visit',
           })
@@ -156,7 +157,7 @@ export function generateDFSSteps(graph: StaticGraph, source: number): GraphStep[
     ns[curr] = 'visited'
     steps.push({
       nodeStates: [...ns], edgeStates: [...es],
-      stack: getS(), visitOrder: getOrder(), isBacktrack: false,
+      stack: getS(), callStack: getCallStack(), visitOrder: getOrder(), isBacktrack: false,
       message: `Vertex ${currLabel} fully processed.`,
       phase: 'visit',
     })
@@ -178,7 +179,7 @@ export function generateDFSSteps(graph: StaticGraph, source: number): GraphStep[
 
   steps.push({
     nodeStates: [...ns], edgeStates: [...es],
-    stack: [], visitOrder: getOrder(), isBacktrack: false,
+    stack: [], callStack: [], visitOrder: getOrder(), isBacktrack: false,
     message: `DFS complete! Traversal order: ${getOrder().join(' → ')}`,
     phase: 'done',
   })

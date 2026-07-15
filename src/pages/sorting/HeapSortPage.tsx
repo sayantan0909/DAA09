@@ -44,6 +44,8 @@ export default function HeapSortPage() {
       content={heapSortContent}
       dryRunLog={dryRunLog}
       codeHighlightLine={heapSortContent.codeLines[player.currentStep.phase]}
+      pseudoHighlightLine={heapSortContent.pseudoLines?.[player.currentStep.phase]}
+      stepCaption={player.currentStep.message}
       visualizer={
         <div className="space-y-4">
           <SortArrayInput onApply={handleCustomArray} />
@@ -63,11 +65,13 @@ export default function HeapSortPage() {
 
           <SortStatsPanel step={player.currentStep} totalElements={activeArray.length} />
 
-          <div className="rounded-lg border border-border bg-surface p-4 pt-12">
-            <SortingVisualizer step={player.currentStep} />
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+            <div className="rounded-lg border border-border bg-surface p-4 pt-12 flex flex-col justify-end">
+              <SortingVisualizer step={player.currentStep} />
+            </div>
+            
+            <HeapTreePanel step={player.currentStep} />
           </div>
-          
-          <HeapTreePanel step={player.currentStep} />
 
           <PlaybackControls
             isPlaying={player.isPlaying}

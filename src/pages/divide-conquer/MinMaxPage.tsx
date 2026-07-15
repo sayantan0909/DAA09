@@ -50,6 +50,8 @@ export default function MinMaxPage() {
       content={minMaxContent}
       dryRunLog={dryRunLog}
       codeHighlightLine={minMaxContent.codeLines[player.currentStep.phase]}
+      pseudoHighlightLine={minMaxContent.pseudoLines?.[player.currentStep.phase]}
+      stepCaption={player.currentStep.message}
       visualizer={
         <div className="space-y-4">
           <SortArrayInput onApply={handleCustomArray} />

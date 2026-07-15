@@ -1,4 +1,5 @@
 import type { KruskalEdgeRow, Subset } from '@/types/graphStep'
+import { UnionFindPanel } from './UnionFindPanel'
 
 interface KruskalPanelProps {
   sortedEdges: KruskalEdgeRow[]
@@ -61,36 +62,7 @@ export function KruskalPanel({ sortedEdges, subsets, mstCost, mstEdges }: Kruska
 
       {/* Union-Find State */}
       <div className="space-y-3">
-        <div className="rounded-lg border border-border bg-surface overflow-hidden">
-          <div className="ledger-rule px-3 py-2">
-            <span className="font-mono-tight text-xs uppercase tracking-wider text-text-faint">
-              Union-Find (Parent / Rank)
-            </span>
-          </div>
-          <table className="w-full text-xs">
-            <thead>
-              <tr className="border-b border-border">
-                <th className="px-3 py-1.5 text-left font-mono-tight text-text-faint font-normal">Vertex</th>
-                <th className="px-3 py-1.5 text-left font-mono-tight text-text-faint font-normal">Parent</th>
-                <th className="px-3 py-1.5 text-left font-mono-tight text-text-faint font-normal">Rank</th>
-              </tr>
-            </thead>
-            <tbody>
-              {subsets.map((s) => {
-                const isRoot = s.parent === s.id
-                return (
-                  <tr key={s.id} className="border-b border-border last:border-0">
-                    <td className="px-3 py-1.5 font-mono-tight font-semibold text-text">{s.id}</td>
-                    <td className={`px-3 py-1.5 font-mono-tight ${isRoot ? 'text-amber' : 'text-text-muted'}`}>
-                      {s.parent}{isRoot && ' (root)'}
-                    </td>
-                    <td className="px-3 py-1.5 font-mono-tight text-text-muted">{s.rank}</td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
-        </div>
+        <UnionFindPanel subsets={subsets} />
 
         {/* MST progress */}
         <div className="rounded-lg border border-border bg-surface p-3">

@@ -6,9 +6,9 @@ import { useStepPlayer } from '@/hooks/useStepPlayer'
 import { AlgorithmPageShell } from '@/components/layout/AlgorithmPageShell'
 import { GraphCanvas, GraphLegend } from '@/components/visualizer/GraphCanvas'
 import { PlaybackControls } from '@/components/visualizer/PlaybackControls'
-import { TokenPanel, TraversalOrder } from '@/components/visualizer/TokenPanel'
 import { ExampleSelector } from '@/components/visualizer/ExampleSelector'
 import { GraphInput } from '@/components/visualizer/GraphInput'
+import { DFSStackPanel } from '@/components/visualizer/DFSStackPanel'
 import type { StaticGraph } from '@/types/graphStep'
 
 const algorithm = getAlgorithm('dfs')!
@@ -49,6 +49,8 @@ export default function DFSPage() {
       content={dfsContent}
       dryRunLog={dryRunLog}
       codeHighlightLine={dfsContent.codeLines[player.currentStep.phase]}
+      pseudoHighlightLine={dfsContent.pseudoLines?.[player.currentStep.phase]}
+      stepCaption={player.currentStep.message}
       visualizer={
         <div className="space-y-4">
           <GraphInput onGraphChange={handleCustomGraph} allowSource />
@@ -68,15 +70,7 @@ export default function DFSPage() {
             edgeStates={player.currentStep.edgeStates}
           />
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <TokenPanel
-              title="Stack (Bottom → Top)"
-              tokens={player.currentStep.stack ?? []}
-              accentLast
-              color="teal"
-            />
-            <TraversalOrder order={player.currentStep.visitOrder ?? []} />
-          </div>
+          <DFSStackPanel step={player.currentStep} />
 
           <PlaybackControls
             isPlaying={player.isPlaying}

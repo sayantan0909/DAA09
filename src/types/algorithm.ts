@@ -48,6 +48,8 @@ export interface AlgorithmContent {
   code: string
   /** maps a step's phase to the 1-indexed line in `code` it corresponds to */
   codeLines: Partial<Record<string, number>>
+  /** maps a step's phase to the 1-indexed line in `pseudocode` it corresponds to */
+  pseudoLines?: Partial<Record<string, number>>
   complexity: ComplexityInfo
   viva: VivaQuestion[]
   applications: string[]

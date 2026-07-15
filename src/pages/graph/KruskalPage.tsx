@@ -47,6 +47,8 @@ export default function KruskalPage() {
       content={kruskalContent}
       dryRunLog={dryRunLog}
       codeHighlightLine={kruskalContent.codeLines[step.phase]}
+      pseudoHighlightLine={kruskalContent.pseudoLines?.[step.phase]}
+      stepCaption={step.message}
       visualizer={
         <div className="space-y-4">
           <GraphInput onGraphChange={handleCustomGraph} requireWeights warnDisconnected />

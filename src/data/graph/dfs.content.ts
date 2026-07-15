@@ -106,6 +106,14 @@ Backtracking happens naturally: when a vertex has no unvisited neighbors, the lo
     backtrack: 20,
     done: 37,
   },
+  pseudoLines: {
+    start: 1,
+    pop: 5,
+    visit: 8,
+    push: 13,
+    backtrack: 4,
+    done: 1,
+  },
 
   complexity: {
     best: 'O(V + E)',

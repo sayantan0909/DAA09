@@ -44,6 +44,8 @@ export default function MergeSortPage() {
       content={mergeSortContent}
       dryRunLog={dryRunLog}
       codeHighlightLine={mergeSortContent.codeLines[player.currentStep.phase]}
+      pseudoHighlightLine={mergeSortContent.pseudoLines?.[player.currentStep.phase]}
+      stepCaption={player.currentStep.message}
       visualizer={
         <div className="space-y-4">
           <SortArrayInput onApply={handleCustomArray} />

@@ -94,6 +94,16 @@ int main() {
     'extract-max': 31,
     'done': 39
   },
+  pseudoLines: {
+    'start': 1,
+    'heapify-start': 19,
+    'heapify-compare': 25,
+    'heapify-swap': 36,
+    'heapify-done': 39,
+    'heap-built': 9,
+    'extract-max': 12,
+    'done': 17
+  },
   complexity: {
     best: 'O(N log N)',
     average: 'O(N log N)',

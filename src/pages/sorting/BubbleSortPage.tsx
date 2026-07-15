@@ -43,6 +43,8 @@ export default function BubbleSortPage() {
       content={bubbleSortContent}
       dryRunLog={dryRunLog}
       codeHighlightLine={bubbleSortContent.codeLines[player.currentStep.phase]}
+      pseudoHighlightLine={bubbleSortContent.pseudoLines?.[player.currentStep.phase]}
+      stepCaption={player.currentStep.message}
       visualizer={
         <div className="space-y-4">
           <SortArrayInput onApply={handleCustomArray} />

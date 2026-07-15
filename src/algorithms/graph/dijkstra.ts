@@ -184,6 +184,14 @@ export function generateDijkstraSteps(graph: StaticGraph, source: number, isDire
           distTable: getTable(),
           currentVertex: u,
           relaxingVertex: to,
+          relaxationCheck: {
+            u: uLabel,
+            v: toLabel,
+            weight: weight,
+            distU: minDist,
+            distV: oldDist,
+            isRelaxed: true
+          },
           message: `Relax edge ${uLabel}→${toLabel} (w=${weight}): dist[${toLabel}] updated ${oldDist === Infinity ? '∞' : oldDist} → ${newDist} via ${uLabel}.`,
           phase: 'relax',
         })
@@ -192,6 +200,15 @@ export function generateDijkstraSteps(graph: StaticGraph, source: number, isDire
           nodeStates: [...ns], edgeStates: getEs(ei, 'active'),
           distTable: getTable(),
           currentVertex: u,
+          relaxingVertex: to,
+          relaxationCheck: {
+            u: uLabel,
+            v: toLabel,
+            weight: weight,
+            distU: minDist,
+            distV: toRow.dist,
+            isRelaxed: false
+          },
           message: `Edge ${uLabel}→${toLabel} (w=${weight}): newDist ${newDist} ≥ dist[${toLabel}]=${toRow.dist === Infinity ? '∞' : toRow.dist}. No update.`,
           phase: 'relax',
         })

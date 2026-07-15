@@ -144,6 +144,13 @@ Kruskal's works best on sparse graphs where sorting E edges (O(E log E)) is effi
     'reject-edge': 62,
     done: 74,
   },
+  pseudoLines: {
+    start: 1,
+    'pick-edge': 6,
+    'accept-edge': 10,
+    'reject-edge': 6,
+    done: 15,
+  },
 
   complexity: {
     best: 'O(E log E)',

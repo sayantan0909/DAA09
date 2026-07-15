@@ -81,20 +81,30 @@ export interface GraphStep {
   visitOrder?: (number | string)[]
 
   // ── DFS ──────────────────────────────────────────────
-  stack?: (number | string)[]
+  /** Stack of vertices for DFS */
+  stack?: string[]
+  /** Optional recursion call stack frame names (e.g. DFS(1)) */
+  callStack?: { fn: string; args: string }[]
+  /** Was this step a backtrack pop? */
   isBacktrack?: boolean   // true when current step is a backtrack
 
   // ── Prim / Kruskal ───────────────────────────────────
   mstCost?: number
   mstEdges?: { from: number | string; to: number | string; weight: number }[]
-
-  // ── Kruskal specific ─────────────────────────────────
   sortedEdges?: KruskalEdgeRow[]
-  subsets?: Subset[]
+  subsets?: { id: number | string; parent: number | string; rank: number }[]
+  candidateEdges?: { from: number | string; to: number | string; weight: number; isMin?: boolean }[]
 
-  // ── Dijkstra ─────────────────────────────────────────
+  // ── Dijkstra / Bellman-Ford ──────────────────────────
   distTable?: DistRow[]
   currentVertex?: number
-  /** vertex being relaxed this step (for animation) */
   relaxingVertex?: number
+  relaxationCheck?: {
+    u: string;
+    v: string;
+    weight: number;
+    distU: number;
+    distV: number;
+    isRelaxed: boolean;
+  }
 }

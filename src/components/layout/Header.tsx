@@ -20,8 +20,9 @@ export function Header({ onMenuClick }: HeaderProps) {
             <path d="M3 6h18M3 12h18M3 18h18" strokeLinecap="round" />
           </svg>
         </button>
-        <Link to="/" className="font-mono-tight text-sm text-text-muted hover:text-text">
-          DAA Visualizer
+        <Link to="/" className="flex items-center gap-2 font-mono-tight text-sm text-text-muted hover:text-text">
+          <img src="/logo.png" alt="Logo" className="h-5 w-5 object-contain" />
+          <span>DAA Visualizer</span>
         </Link>
       </div>
 

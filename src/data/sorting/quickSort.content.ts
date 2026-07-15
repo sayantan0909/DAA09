@@ -72,6 +72,15 @@ int main() {
     'partition-done': 19,
     'done': 35
   },
+  pseudoLines: {
+    'start': 1,
+    'divide': 2,
+    'pivot-select': 12,
+    'partition-compare': 17,
+    'partition-swap': 19,
+    'partition-done': 23,
+    'done': 9
+  },
   complexity: {
     best: 'O(N log N)',
     average: 'O(N log N)',
